@@ -38,6 +38,7 @@ class Home extends JFrame implements ActionListener{
     public static void main(String[] args) {
         Home frame = new Home();
         frame.setSize(1000, 500);
+        frame.setTitle("CSB RUN");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
