@@ -114,6 +114,7 @@ public class Game extends JPanel implements Runnable,KeyListener,ActionListener{
         ballManU.draw(g);
         mainchar.draw(g);
         enemyManager.draw(g);
+        g.setFont(new Font("TimesRoman", Font.PLAIN, 60));
         g.setColor(Color.white);
         g.drawString("Score : "+Score, 600, 50);
         // Game over ---------------------
