@@ -12,8 +12,12 @@ public class Police extends Enemy {
     private int height = 120;
     private BufferedImage image,image2;
     private Rectangle rect;
+    CharacterMain characterMain;
+    boolean isScoreGot = false;
+    boolean isHitGot = false;
 
-    public Police() {
+    public Police(CharacterMain characterMain) {
+        this.characterMain = characterMain;
         image = Resource.getResourceImage("img/Police.png");
         image2 = Resource.getResourceImage("img/wave1.png");
         posX=800;
@@ -96,6 +100,31 @@ public class Police extends Enemy {
     public boolean isOutOfScreen() {
         return (posX + width < 0);
         
+    }
+
+    @Override
+    public boolean isOver() {
+        return (characterMain.getX() > getPosX());
+    }
+
+    @Override
+    public boolean isScoreGot() {
+        return isScoreGot;
+    }
+
+    @Override
+    public void setScoreGot(boolean isScoreGot) {
+        this.isScoreGot = isScoreGot;
+    }
+
+    @Override
+    public boolean isHitGot() {
+        return isHitGot;
+    }
+
+    @Override
+    public void setHitGot(boolean isHitGot) {
+        this.isHitGot = isHitGot;
     }
 
     

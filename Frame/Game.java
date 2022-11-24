@@ -1,28 +1,31 @@
 package Frame;
 
+import javax.swing.JButton;
 import javax.swing.JPanel;
+import java.awt.event.*;
 
 import Other.CheckHit;
 import obj.*;
 
 import java.awt.Graphics;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 
-public class Game extends JPanel implements Runnable,KeyListener{
+public class Game extends JPanel implements Runnable,KeyListener,ActionListener{
     Thread thread;
     public static final float GRAVITY = 0.08f;
     public static final float GROUNDY = 400;
+    public static int Score;
     private CharacterMain mainchar;
     private Balloon ballManU;
     private Road road;
     private EnemyManager enemyManager;
+    GameOver gameOver;
     
     public Game(){
         thread = new Thread(this);
+        
         mainchar = new CharacterMain();
         road = new Road(this);
-        ballManU = new Balloon();
+        ballManU = new Balloon(mainchar);
         enemyManager = new EnemyManager(mainchar);
         thread.start();
         System.out.println("Start");
@@ -40,10 +43,7 @@ public class Game extends JPanel implements Runnable,KeyListener{
                 road.update();
                 ballManU.update();
                 enemyManager.update();
-                CheckHit.checkhit2(mainchar, ballManU);
-                if(mainchar.getHP() < 0){
-                    thread.stop();
-                }
+                CheckHit.checkhit(mainchar, ballManU);
                 repaint();
                 thread.sleep(8);
             } catch (InterruptedException e) {
@@ -93,6 +93,34 @@ public class Game extends JPanel implements Runnable,KeyListener{
         ballManU.draw(g);
         mainchar.draw(g);
         enemyManager.draw(g);
+        g.drawString(""+Score, 800, 20);
+        if(mainchar.getHP() < 0){
+            thread.stop();
+            this.remove(this);
+            this.setSize(1000, 500);
+            gameOver = new GameOver();
+            gameOver.Bplay.addActionListener(this);
+            gameOver.Bexit.addActionListener(this);
+            g.drawString(""+Score, 600, 300);
+            this.add(gameOver);
+            gameOver.requestFocusInWindow();
+        }
 
+    }
+
+
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if(e.getSource()==gameOver.Bplay){
+            this.remove(this);
+            // this.add(this);
+            System.out.println("Again");
+        }
+        else if(e.getSource()==gameOver.Bexit){
+            System.out.println("Exit");
+            System.exit(0);
+        }
+        
     }
 }

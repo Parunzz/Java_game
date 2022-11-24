@@ -14,6 +14,9 @@ public class Balloon extends Enemy {
     private Random random;
     private Rectangle rect;
     private int width=100,height=100;
+    CharacterMain characterMain;
+    private boolean isHitGot;
+    private boolean isScoreGot;
     public int getHeight() {
         return height;
     }
@@ -26,7 +29,8 @@ public class Balloon extends Enemy {
     public void setWidth(int width) {
         this.width = width;
     }
-    public Balloon() {
+    public Balloon(CharacterMain characterMain) {
+        this.characterMain = characterMain;
         random = new Random();
         imgball = Resource.getResourceImage("img/BallManU.png");
         balls = new ArrayList<Ball>();
@@ -84,6 +88,31 @@ public class Balloon extends Enemy {
     private class Ball{
         float posX;
         float posY;
+    }
+
+    @Override
+    public boolean isOver() {
+        return characterMain.getX() > getX();
+    }
+
+    @Override
+    public boolean isScoreGot() {
+        return isScoreGot;
+    }
+
+    @Override
+    public void setScoreGot(boolean isScoreGot) {
+        this.isScoreGot = isScoreGot;
+    }
+    
+    @Override
+    public boolean isHitGot() {
+        return isHitGot;
+    }
+
+    @Override
+    public void setHitGot(boolean isHitGot) {
+        this.isHitGot = isHitGot;
     }
 
 }

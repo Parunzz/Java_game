@@ -3,6 +3,7 @@
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import  static Frame.Game.Score;
 
 
 import java.awt.Graphics;
@@ -16,7 +17,7 @@ public class EnemyManager {
             this.characterMain = characterMain;
             enemies = new ArrayList<Enemy>(); 
             random = new Random();
-            Police police = new Police();
+            // Police police = new Police();
             enemies.add(getRandom());
             enemies.add(getRandom());
             
@@ -25,11 +26,15 @@ public class EnemyManager {
         public void update(){
             for(Enemy e : enemies){
                 e.update();
-                if(e.getBound().intersects(characterMain.getBound())){
+                if(enemies.get(0).isOver() && !e.isScoreGot()){
+                    Score++;
+                    e.setScoreGot(true);
+                }
+                if(e.getBound().intersects(characterMain.getBound()) && !e.isHitGot() && enemies.get(0).isOver()){
                     characterMain.jump();
-                    System.out.println("hit wave");
                     characterMain.setHP(characterMain.getHP()-10);
-                    System.out.println("-HP");
+                    e.setHitGot(true);
+                    characterMain.setHit(true);
                 }
             }
 
@@ -48,7 +53,7 @@ public class EnemyManager {
         }
 
         private Police getRandom(){
-            Police police = new Police();
+            Police police = new Police(characterMain);
             police.setPosX(random.nextInt(1000,1500));
             if(random.nextBoolean()){
                 police.setImage(police.getImage());

@@ -19,7 +19,7 @@ public class CharacterMain{
     private int HP = 100;
 
 
-    private BufferedImage ImageJump;
+    private BufferedImage ImageJump,ImageJump2;
     private Animation charecterRun;
     private Rectangle rect;
     public CharacterMain() {
@@ -28,6 +28,7 @@ public class CharacterMain{
         charecterRun.addFrame(Resource.getResourceImage("img/Petch2.png"));
         charecterRun.addFrame(Resource.getResourceImage("img/Petch3.png"));
         ImageJump = Resource.getResourceImage("img/PetchJump.png");
+        ImageJump2 = Resource.getResourceImage("img/PetchJump2.png");
         rect = new Rectangle();
     }
     public void Update(){
@@ -101,10 +102,17 @@ public class CharacterMain{
         // super.paintComponent(g);
         g.drawRect((int)x, (int)y, (int)width, (int)height);
         if((int)y != 280){
-            g.drawImage(ImageJump, (int)x, (int)y,(int)width, (int)height,null);
+            if(getHit()){
+                g.drawImage(ImageJump2, (int)x, (int)y,(int)width, (int)height,null);
+            }else{
+                g.drawImage(ImageJump, (int)x, (int)y,(int)width, (int)height,null);
+                
+            }
         }else{
             g.drawImage(charecterRun.getFrame(), (int)x, (int)y,(int)width, (int)height,null);
+            setHit(false);
         }
+        
         g.drawString(""+HP+"%", 20, 20);
     }
     public void drawMenu(Graphics g) {
