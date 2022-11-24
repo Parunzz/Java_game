@@ -2,6 +2,7 @@ package Frame;
 
 import javax.swing.JPanel;
 
+import Other.CheckHit;
 import obj.*;
 
 import java.awt.Graphics;
@@ -39,13 +40,10 @@ public class Game extends JPanel implements Runnable,KeyListener{
                 road.update();
                 ballManU.update();
                 enemyManager.update();
-                if(ballManU.getBound().intersects(mainchar.getBound())){
-                    System.out.println("hit man U");
-                    mainchar.jump();
-                    mainchar.setHP(mainchar.getHP()-10);
-                    System.out.println("-HP");
+                CheckHit.checkhit2(mainchar, ballManU);
+                if(mainchar.getHP() < 0){
+                    thread.stop();
                 }
-                
                 repaint();
                 thread.sleep(8);
             } catch (InterruptedException e) {

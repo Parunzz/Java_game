@@ -14,6 +14,18 @@ public class Balloon extends Enemy {
     private Random random;
     private Rectangle rect;
     private int width=100,height=100;
+    public int getHeight() {
+        return height;
+    }
+    public void setHeight(int height) {
+        this.height = height;
+    }
+    public int getWidth() {
+        return width;
+    }
+    public void setWidth(int width) {
+        this.width = width;
+    }
     public Balloon() {
         random = new Random();
         imgball = Resource.getResourceImage("img/BallManU.png");
@@ -31,6 +43,12 @@ public class Balloon extends Enemy {
 
     public Rectangle getBound(){
         return rect;
+    }
+    public float getX(){
+        return balls.get(0).posX;
+    }
+    public float getY(){
+        return balls.get(0).posY;
     }
 
     public void update(){

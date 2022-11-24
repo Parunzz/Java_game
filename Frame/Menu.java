@@ -46,7 +46,7 @@ public class Menu extends JPanel implements Runnable{
             walk = 0;
         }
         petch.setX(X);
-        if(X < 1000){
+        if(X < 1200){
             petch.setX(X+=Speed);  
             X+=Speed;
         }
