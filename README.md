@@ -1,5 +1,5 @@
 # Java_game
 CSB RUN   <-------------
-main is in "Home.java"
+main is in "Frame/Home.java"
 
 This is my first game project
