@@ -16,7 +16,7 @@ public class Balloon extends Enemy {
     private int width=100,height=100;
     CharacterMain characterMain;
     private boolean isHitGot;
-    private boolean isScoreGot;
+    public static boolean isScoreGot;
     public int getHeight() {
         return height;
     }
@@ -75,7 +75,7 @@ public class Balloon extends Enemy {
 
     public void draw(Graphics g){
         for(Ball ball: balls){
-            g.drawRect((int) ball.posX, (int)ball.posY,width,height);
+            // g.drawRect((int) ball.posX, (int)ball.posY,width,height);
             g.drawImage(imgball,(int) ball.posX, (int)ball.posY,width,height ,null);
 
         }
@@ -94,6 +94,9 @@ public class Balloon extends Enemy {
     public boolean isOver() {
         return characterMain.getX() > getX();
     }
+    public boolean isYOver() {
+        return characterMain.getY() > getY();
+    }
 
     @Override
     public boolean isScoreGot() {
@@ -104,7 +107,7 @@ public class Balloon extends Enemy {
     public void setScoreGot(boolean isScoreGot) {
         this.isScoreGot = isScoreGot;
     }
-    
+
     @Override
     public boolean isHitGot() {
         return isHitGot;

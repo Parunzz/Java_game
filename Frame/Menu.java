@@ -25,7 +25,7 @@ public class Menu extends JPanel implements Runnable{
         Bexit.setBounds(600, 350, 100, 50);
         add(Bplay);
         add(Bexit);
-        System.out.println("Open Menu");
+        // System.out.println("Open Menu");
     }
     int walk = 0;
     int X = 0, Speed = 3;

@@ -38,7 +38,7 @@ public class Police extends Enemy {
     }
     @Override
     public void draw(Graphics g){
-        g.drawRect(posX, posY,width,height);
+        // g.drawRect(posX, posY,width,height);
         g.drawImage(image, posX, posY,width,height, null);
     }
 

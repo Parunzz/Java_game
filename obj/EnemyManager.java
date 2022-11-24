@@ -12,14 +12,17 @@ public class EnemyManager {
         private List<Enemy> enemies;
         private Random random;
         CharacterMain characterMain;
-        
+         
         public EnemyManager(CharacterMain characterMain){
             this.characterMain = characterMain;
             enemies = new ArrayList<Enemy>(); 
             random = new Random();
             // Police police = new Police();
+
             enemies.add(getRandom());
             enemies.add(getRandom());
+            enemies.add(getRandom());
+            // enemies.add(getRandom());
             
         }
 
@@ -27,12 +30,13 @@ public class EnemyManager {
             for(Enemy e : enemies){
                 e.update();
                 if(enemies.get(0).isOver() && !e.isScoreGot()){
-                    Score++;
+                    if(!characterMain.getHit())
+                        Score++;
                     e.setScoreGot(true);
                 }
                 if(e.getBound().intersects(characterMain.getBound()) && !e.isHitGot() && enemies.get(0).isOver()){
                     characterMain.jump();
-                    characterMain.setHP(characterMain.getHP()-10);
+                    characterMain.setHP(characterMain.getHP()-20);
                     e.setHitGot(true);
                     characterMain.setHit(true);
                 }
@@ -62,6 +66,11 @@ public class EnemyManager {
                 police.setImage(police.getImage2());
             }
             return police;
+        }
+
+        public void reset(){
+            enemies.clear();
+            enemies.add(getRandom());
         }
 
    

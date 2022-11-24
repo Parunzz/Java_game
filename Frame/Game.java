@@ -3,26 +3,46 @@ package Frame;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import java.awt.event.*;
-
+import java.awt.Color;
+import java.awt.Font;
 import Other.CheckHit;
+import Other.Resource;
 import obj.*;
-
+import java.awt.image.BufferedImage;
 import java.awt.Graphics;
 
 public class Game extends JPanel implements Runnable,KeyListener,ActionListener{
     Thread thread;
+    Thread t1;
     public static final float GRAVITY = 0.08f;
     public static final float GROUNDY = 400;
+    public static int time = 0;
+    private BufferedImage imgBg = Resource.getResourceImage("img/GameOver.png");
+    JButton Bexit = new JButton("Exit");
     public static int Score;
     private CharacterMain mainchar;
     private Balloon ballManU;
     private Road road;
     private EnemyManager enemyManager;
     GameOver gameOver;
+    // Font f = new Font();
     
     public Game(){
         thread = new Thread(this);
-        
+        t1 = new Thread(new Runnable(){
+            public void run() {
+                while (true) {
+                    try {
+                        time++;
+                        t1.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    
+                }
+            }
+        });
+        t1.start();
         mainchar = new CharacterMain();
         road = new Road(this);
         ballManU = new Balloon(mainchar);
@@ -36,7 +56,6 @@ public class Game extends JPanel implements Runnable,KeyListener,ActionListener{
 
     @Override
     public void run() {
-        
         while(true){
             try {
                 mainchar.Update();
@@ -46,6 +65,7 @@ public class Game extends JPanel implements Runnable,KeyListener,ActionListener{
                 CheckHit.checkhit(mainchar, ballManU);
                 repaint();
                 thread.sleep(8);
+
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -88,22 +108,33 @@ public class Game extends JPanel implements Runnable,KeyListener,ActionListener{
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
+        
         g.drawLine(0, (int)GROUNDY, getWidth(), (int)GROUNDY);
         road.draw(g);
         ballManU.draw(g);
         mainchar.draw(g);
         enemyManager.draw(g);
-        g.drawString(""+Score, 800, 20);
-        if(mainchar.getHP() < 0){
+        g.setColor(Color.white);
+        g.drawString("Score : "+Score, 600, 50);
+        // Game over ---------------------
+        if(mainchar.getHP() <= 0){
+            mainchar.setHP(0);
+            mainchar.draw(g);
+            try {
+                thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            };
             thread.stop();
-            this.remove(this);
-            this.setSize(1000, 500);
-            gameOver = new GameOver();
-            gameOver.Bplay.addActionListener(this);
-            gameOver.Bexit.addActionListener(this);
-            g.drawString(""+Score, 600, 300);
-            this.add(gameOver);
-            gameOver.requestFocusInWindow();
+            t1.stop();
+            g.drawImage(imgBg, 0, 0, 1000, 500, this);
+            Bexit.setBounds(500, 400, 100, 50);
+            Bexit.addActionListener(this);
+            add(Bexit);
+            g.setFont(new Font("TimesRoman", Font.PLAIN, 50));
+            g.setColor(Color.orange);
+            g.drawString(""+Score, 800, 230);
+            g.drawString("Time : "+time+" sec", 520, 340);
         }
 
     }
@@ -112,15 +143,11 @@ public class Game extends JPanel implements Runnable,KeyListener,ActionListener{
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(e.getSource()==gameOver.Bplay){
-            this.remove(this);
-            // this.add(this);
-            System.out.println("Again");
-        }
-        else if(e.getSource()==gameOver.Bexit){
-            System.out.println("Exit");
+        if(e.getSource()==Bexit){
+            // System.out.println("Exit");
             System.exit(0);
         }
+        
         
     }
 }

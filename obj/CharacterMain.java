@@ -2,6 +2,9 @@ package obj;
 import java.awt.Graphics;
 import static Frame.Game.GROUNDY;
 import static Frame.Game.GRAVITY;
+import static Frame.Game.time;
+import static obj.Balloon.isScoreGot;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.awt.Rectangle;
 import Other.Animation;
@@ -22,6 +25,7 @@ public class CharacterMain{
     private BufferedImage ImageJump,ImageJump2;
     private Animation charecterRun;
     private Rectangle rect;
+    private Balloon b;
     public CharacterMain() {
         charecterRun = new Animation(200);//Charecter speed
         charecterRun.addFrame(Resource.getResourceImage("img/Petch1.png"));
@@ -111,12 +115,19 @@ public class CharacterMain{
         }else{
             g.drawImage(charecterRun.getFrame(), (int)x, (int)y,(int)width, (int)height,null);
             setHit(false);
+            
+            
         }
-        
-        g.drawString(""+HP+"%", 20, 20);
+        g.setColor(Color.white);
+        g.setFont(new Font("TimesRoman", Font.PLAIN, 30));
+        // g.drawString("HP : "+HP+" %", 20, 50);
+        // g.drawRect(0, 0, HP, 100);
+        g.setColor(Color.red);
+        if(HP > 0)
+            g.fillRect(0, 0, HP*5, 20);
+
     }
     public void drawMenu(Graphics g) {
-
         g.drawImage(charecterRun.getFrame(), (int)x, (int)y,(int)width, (int)height,null);
     }
 
