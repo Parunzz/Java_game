@@ -8,7 +8,7 @@ import java.awt.Rectangle;
 import java.util.List;
 import java.util.Random;
 
-public class Balloon {
+public class Balloon extends Enemy {
     private BufferedImage imgball;
     private List<Ball> balls;
     private Random random;
@@ -22,7 +22,6 @@ public class Balloon {
         rect = new Rectangle();
         RandomBall();
     }
-
     public void RandomBall(){
         Ball ball1 = new Ball();
         ball1.posX = random.nextFloat(1000,2000);
@@ -59,9 +58,14 @@ public class Balloon {
 
         }
     }
+    @Override
+    public boolean isOutOfScreen() {
+        return (balls.get(0).posX + width < 0);
+    }
     
     private class Ball{
         float posX;
         float posY;
     }
+
 }

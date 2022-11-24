@@ -10,18 +10,19 @@ public class Police extends Enemy {
     private int posY;
     private int width = 100;
     private int height = 120;
-    private BufferedImage image;
+    private BufferedImage image,image2;
     private Rectangle rect;
 
     public Police() {
         image = Resource.getResourceImage("img/Police.png");
+        image2 = Resource.getResourceImage("img/wave1.png");
         posX=800;
         posY=300;
         rect = new Rectangle();
     }
 
     public void update(){
-        posX--;
+        posX-=2;
         rect.x = posX;
         rect.y = posY;
         rect.width = width;
@@ -72,9 +73,15 @@ public class Police extends Enemy {
     public BufferedImage getImage() {
         return image;
     }
+    public BufferedImage getImage2() {
+        return image2;
+    }
 
     public void setImage(BufferedImage image) {
         this.image = image;
+    }
+    public void setImage2(BufferedImage image) {
+        this.image2 = image;
     }
 
     public Rectangle getRect() {

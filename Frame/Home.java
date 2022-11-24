@@ -17,9 +17,7 @@ class Home extends JFrame implements ActionListener{
         
         
     }
-    public void startGame(){
-        game.startGame();
-    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource()==menu.Bplay){
@@ -42,7 +40,6 @@ class Home extends JFrame implements ActionListener{
         frame.setSize(1000, 500);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);
-        frame.setVisible(true); 
-        // frame.startGame();
+        frame.setVisible(true);
     }
 } 

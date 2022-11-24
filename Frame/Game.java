@@ -10,7 +10,7 @@ import java.awt.event.KeyListener;
 
 public class Game extends JPanel implements Runnable,KeyListener{
     Thread thread;
-    public static final float GRAVITY = 0.1f;
+    public static final float GRAVITY = 0.08f;
     public static final float GROUNDY = 400;
     private CharacterMain mainchar;
     private Balloon ballManU;
@@ -22,13 +22,10 @@ public class Game extends JPanel implements Runnable,KeyListener{
         mainchar = new CharacterMain();
         road = new Road(this);
         ballManU = new Balloon();
-        enemyManager = new EnemyManager();
+        enemyManager = new EnemyManager(mainchar);
         thread.start();
         System.out.println("Start");
 
-    }
-    public void startGame(){
-        // thread.start();
     }
 
 
@@ -42,8 +39,15 @@ public class Game extends JPanel implements Runnable,KeyListener{
                 road.update();
                 ballManU.update();
                 enemyManager.update();
+                if(ballManU.getBound().intersects(mainchar.getBound())){
+                    System.out.println("hit man U");
+                    mainchar.jump();
+                    mainchar.setHP(mainchar.getHP()-10);
+                    System.out.println("-HP");
+                }
+                
                 repaint();
-                thread.sleep(10);
+                thread.sleep(8);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -62,12 +66,18 @@ public class Game extends JPanel implements Runnable,KeyListener{
                 
             }
             if(a == KeyEvent.VK_D || a == KeyEvent.VK_RIGHT){
-                float mx = mainchar.getX()+5;
+                float mx = mainchar.getX()+10;
                 mainchar.setX(mx);
+                if(mainchar.getX() > 1000){
+                    mainchar.setX(-50);
+                }
+                
             }
             if(a == KeyEvent.VK_A || a == KeyEvent.VK_LEFT){
-                float mx = mainchar.getX()-5;
-                mainchar.setX(mx);
+                if(mainchar.getX() > 0){
+                    float mx = mainchar.getX()-10;
+                    mainchar.setX(mx);
+                }
             }
 
         

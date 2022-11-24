@@ -11,6 +11,14 @@ public class CharacterMain{
     private float x=0,y=0;//x , y of char
     private float speedY = 0;
     private float width = 100,height =120;
+    private boolean Hit = false;
+    
+
+
+
+    private int HP = 100;
+
+
     private BufferedImage ImageJump;
     private Animation charecterRun;
     private Rectangle rect;
@@ -38,9 +46,17 @@ public class CharacterMain{
         rect.height =(int)height;
     }
     public void jump(){
-        speedY = -4;
+        speedY = -6;
         y += speedY;
     }
+
+    public boolean getHit(){
+        return Hit;
+    }
+    public void setHit(boolean hit) {
+        Hit = hit;
+    }
+
     public Rectangle getBound(){
         return rect;
     }
@@ -62,6 +78,24 @@ public class CharacterMain{
     public void setSpeedY(float speedY) {
         this.speedY = speedY;
     }
+    public float getHeight() {
+        return height;
+    }
+    public void setHeight(float height) {
+        this.height = height;
+    }
+    public float getWidth() {
+        return width;
+    }
+    public void setWidth(float width) {
+        this.width = width;
+    }
+    public int getHP() {
+        return HP;
+    }
+    public void setHP(int hP) {
+        HP = hP;
+    }
 
     public void draw(Graphics g) {
         // super.paintComponent(g);
@@ -71,6 +105,11 @@ public class CharacterMain{
         }else{
             g.drawImage(charecterRun.getFrame(), (int)x, (int)y,(int)width, (int)height,null);
         }
+        g.drawString(""+HP+"%", 20, 20);
+    }
+    public void drawMenu(Graphics g) {
+
+        g.drawImage(charecterRun.getFrame(), (int)x, (int)y,(int)width, (int)height,null);
     }
 
     

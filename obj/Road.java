@@ -34,7 +34,7 @@ public class Road {
 
     public void update(){
         for(ImageRoad imageRoad : listImage){
-            imageRoad.posX --;
+            imageRoad.posX -=2;
         }
         ImageRoad first = listImage.get(0);
         if(listImage.get(0).posX + imgRoad1.getWidth() < 0){
